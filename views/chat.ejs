@@ -1,49 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-    <style>
-      body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    <head>
+        <title>ChatRoom</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/css/styles1.css">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="inner-cont">
+                <div class="sidebar">
+                    <div class="sidecont">
+                        <span class = "chat-head">Users Online</span>
+                        <form action="#">
+                            <input type="text" placeholder="🔎Search" class="Search"> 
+                        </form>
+                       
+                        <div class="chats">
+                            <div class='chat1 using'><i class='uil uil-user'></i><span>dcv</span></div>
+                        </div>
+             
+                    </div>
+                </div>
+                <div class="main-chat">
+                    <div class="header">
+                        <span style="padding:20px">Chat Room1</span>
+                    </div>
+                    <div class="main">
+                        
+                    </div>
+                    <div class="footer">
+                        <form class="type-here" id="chatting" action="">
+                            <input id="message" class="type"type="text" placeholder="Type here">
+                            <i class="uil uil-paperclip"style="font-size:larger"></i>
+                            <button style="background: none; border:0" type="submit"><i class="uil uil-message" style="font-size: larger" ></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+        <script>
+            var user="<%=usern%>";
+        </script>
+        <script>
+            socket=io();
+            socket.emit("new-user",user);
+            socket.on("add-user",(onlineusr)=>{
+                var out="";
+                for (var i=0;i<onlineusr.length;i++){
+                    out+=`<div class='chat1 using'><i class='uil uil-user'></i><span>${onlineusr[i]}</span></div>`
+                }
+                var users=document.getElementsByClassName("chats")[0].innerHTML=out;
+            });
+           
+                document.getElementById("chatting").addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    if (document.getElementById("message").value) {
+                      socket.emit('send-msg', {username:user,message:document.getElementById("message").value});
+                      document.getElementById("message").value = '';
+                    }
+                  });
+            
+            socket.on("new-msg",(chatUser)=>{
+                var chats=document.getElementsByClassName("main")[0];
+                out2="";
+                for(var i=0;i<chatUser.length;i++){
+                    if(chatUser[i].username===user){
+                        out2+=(`<div class="user-message"><div class="user-msg sb1"><div><span class="username">${user}</span></div><div><p class="user-text">${chatUser[i].message}</p></div><div><span class="user-time">20:08</span></div></div></div>`)
+                    }
+                    else{
+                        out2+=(`<div class="sender-message"> <div class="sender-msg sb2"><div><span class="sendername">${chatUser[i].username}</span></div><div><p class="sender-text">${chatUser[i].message}</p></div><div><span class="sender-time">20:11</span></div></div></div>`)
+                    }
 
-      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
-      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
-      #input:focus { outline: none; }
-      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+                }
+                chats.innerHTML=out2;
+                chats.scrollTo(0, chats.scrollHeight);
 
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages > li { padding: 0.5rem 1rem; }
-      #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form id="form">
-      <input id="input" autocomplete="off" />
-      <button type="submit">Send</button>
-    </form>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    <script>
-      var a="<%=username%>";
-    </script>
-    <script>
-        var socket = io();
-        socket.emit("username",a);
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-          if (input.value) {
-            socket.emit('send message', input.value);
-            input.value = '';
-          }
-        });
-        socket.on("send message",(msg)=>{
-          var item = document.createElement('li');
-    item.textContent = msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
 
-        })
-
-      </script>
-
-  </body>
+            });
+          
+          
+        </script>
+    </body>
 </html>

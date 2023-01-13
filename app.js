@@ -13,23 +13,36 @@ app.get("/",function(req,res){
 });
 app.post("/",function(req,res){
   console.log(req.body);
-  res.render("chat",{username:req.body.username});
+  res.render("chat",{usern:req.body.username});
+});
+var onlineusr=[]
+var onlinechat=[]
+io.on("connection", (socket)=>{
+  
+  socket.on("new-user",(user)=>{
+   onlineusr.push(user); 
+  socket.username=user;
+  //console.log(socket);
+  io.emit("add-user",onlineusr);
+ });
+ socket.on("send-msg",(msgObj)=>{
+  onlinechat.push(msgObj);
+  //console.log(msgObj);
+  io.emit("new-msg",onlinechat);
+  
+})
+socket.on("disconnect",()=>{
+  // console.log(socket);
+  var index = onlineusr.indexOf(socket.username);
+  if (index !== -1) {
+    onlineusr.splice(index, 1);
+  }
+  console.log(onlineusr);
+  io.emit("add-user",onlineusr);
 })
 
-io.on('connection', (socket) => {
-  var c;
-    console.log('a user connected');
-    socket.on("username",(msg)=>{
-      c=msg;
-      io.emit("send message",msg+"connected");
-    });
-    socket.on("send message",(msg)=>{
-      io.emit("send message",msg);
-    })
-    socket.on('disconnect', () => {
-      io.emit("send message",c+"Disconnected");
-    });
-  });
+})
+
 server.listen(3000, () => {
     console.log('listening on *:3000');
   });
