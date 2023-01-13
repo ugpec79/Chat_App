@@ -3,7 +3,7 @@
     width:10px;
 }
 .chats::-webkit-scrollbar-track{
-    background-color: #5BC0F8;
+    background-color: transparent;
     border-radius: 16px;
 }
 .chats::-webkit-scrollbar-thumb{
@@ -14,7 +14,7 @@
     width:10px;
 }
 .main::-webkit-scrollbar-track{
-    background-color: #5BC0F8;
+    background-color: transparent;
 }
 .main::-webkit-scrollbar-thumb{
     background-color: #0081B4;
