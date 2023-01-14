@@ -32,7 +32,7 @@
                     <div class="footer">
                         <form class="type-here" id="chatting" action="">
                             <input id="message" class="type"type="text" placeholder="Type here">
-                            <i class="uil uil-paperclip"style="font-size:larger"></i>
+                            <i class="uil uil-paperclip"style="font-size:larger"><input type="file" name="send-file" id="userfile"></i>
                             <button style="background: none; border:0" type="submit"><i class="uil uil-message" style="font-size: larger" ></i></button>
                         </form>
                     </div>
@@ -61,10 +61,24 @@
                       document.getElementById("message").value = '';
                     }
                   });
-            
+            socket.emit("send-prev-msg");
+            socket.on("rec-prev-msg",(msgArray)=>{
+                var chats=document.getElementsByClassName("main")[0];
+                let out3="";
+                for(var i=0;i<msgArray.length;i++){
+                    
+                        out3+=(`<div class="sender-message"> <div class="sender-msg sb2"><div><span class="sendername">${msgArray[i].username}</span></div><div><p class="sender-text">${msgArray[i].message}</p></div><div><span class="sender-time">20:11</span></div></div></div>`)
+                    
+
+                }
+                chats.innerHTML=out3;
+                chats.scrollTo(0, chats.scrollHeight);
+
+
+            })
             socket.on("new-msg",(chatUser)=>{
                 var chats=document.getElementsByClassName("main")[0];
-                out2="";
+                let out2="";
                 for(var i=0;i<chatUser.length;i++){
                     if(chatUser[i].username===user){
                         out2+=(`<div class="user-message"><div class="user-msg sb1"><div><span class="username">${user}</span></div><div><p class="user-text">${chatUser[i].message}</p></div><div><span class="user-time">20:08</span></div></div></div>`)
@@ -79,6 +93,7 @@
 
 
             });
+            
           
           
         </script>

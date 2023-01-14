@@ -7,6 +7,9 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const { writeFile } = require("fs");
+var fs = require('fs');
+const path = require("path");
 const io = new Server(server);
 app.get("/",function(req,res){
     res.render("login");
@@ -22,15 +25,19 @@ io.on("connection", (socket)=>{
   socket.on("new-user",(user)=>{
    onlineusr.push(user); 
   socket.username=user;
-  //console.log(socket);
+ 
   io.emit("add-user",onlineusr);
  });
+  socket.on("send-prev-msg",()=>{
+    io.emit("rec-prev-msg",onlinechat);
+  })
  socket.on("send-msg",(msgObj)=>{
   onlinechat.push(msgObj);
-  //console.log(msgObj);
+
   io.emit("new-msg",onlinechat);
   
 })
+
 socket.on("disconnect",()=>{
   // console.log(socket);
   var index = onlineusr.indexOf(socket.username);
