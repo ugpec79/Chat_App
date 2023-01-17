@@ -17,14 +17,15 @@
                         </form>
                        
                         <div class="chats">
-                            <div class='chat1 using'><i class='uil uil-user'></i><span>dcv</span></div>
+                            
                         </div>
              
                     </div>
                 </div>
                 <div class="main-chat">
                     <div class="header">
-                        <span style="padding:20px">Chat Room1</span>
+                        <span style="padding:20px"><%=roomId%></span>
+                      
                     </div>
                     <div class="main">
                         
@@ -32,7 +33,6 @@
                     <div class="footer">
                         <form class="type-here" id="chatting" action="">
                             <input id="message" class="type"type="text" placeholder="Type here">
-                            <i class="uil uil-paperclip"style="font-size:larger"><input type="file" name="send-file" id="userfile"></i>
                             <button style="background: none; border:0" type="submit"><i class="uil uil-message" style="font-size: larger" ></i></button>
                         </form>
                     </div>
@@ -41,60 +41,40 @@
         </div>
         <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
         <script>
-            var user="<%=usern%>";
+            var user="<%=userId%>";
+            var room="<%=roomId%>";
         </script>
         <script>
             socket=io();
-            socket.emit("new-user",user);
-            socket.on("add-user",(onlineusr)=>{
+            users={}
+            socket.emit("new-user",user,room);
+            socket.on("room-joined",(user)=>{
                 var out="";
-                for (var i=0;i<onlineusr.length;i++){
-                    out+=`<div class='chat1 using'><i class='uil uil-user'></i><span>${onlineusr[i]}</span></div>`
-                }
-                var users=document.getElementsByClassName("chats")[0].innerHTML=out;
+                out+=`<div class='chat1 using'><i class='uil uil-user'></i><span>${user}</span></div>`
+                var  userOnline=document.getElementsByClassName("chats")[0];
+                userOnline.append(out);
+                users[user]=out;
             });
-           
-                document.getElementById("chatting").addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    if (document.getElementById("message").value) {
-                      socket.emit('send-msg', {username:user,message:document.getElementById("message").value});
-                      document.getElementById("message").value = '';
-                    }
-                  });
-            socket.emit("send-prev-msg");
-            socket.on("rec-prev-msg",(msgArray)=>{
-                var chats=document.getElementsByClassName("main")[0];
-                let out3="";
-                for(var i=0;i<msgArray.length;i++){
-                    
-                        out3+=(`<div class="sender-message"> <div class="sender-msg sb2"><div><span class="sendername">${msgArray[i].username}</span></div><div><p class="sender-text">${msgArray[i].message}</p></div><div><span class="sender-time">20:11</span></div></div></div>`)
-                    
-
+            var messagesOn=document.getElementsByClassName("main")[0];
+            document.getElementById("chatting").addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (document.getElementById("message").value) {
+                  socket.emit('message-send', document.getElementById("message").value);
+                  var out2="";
+                  out2+=`<div class="user-message"><div class="user-msg sb1"><div><span class="username">${user}</span></div><div><p class="user-text">${document.getElementById("message").value}</p></div><div><span class="user-time">20:08</span></div></div></div>`
+                  messagesOn.append(out2);
+                  document.getElementById("message").value = '';
                 }
-                chats.innerHTML=out3;
-                chats.scrollTo(0, chats.scrollHeight);
-
-
+              });
+            socket.on("rec-msg",(msg,user)=>{
+                var out3="";
+                out3+=`<div class="sender-message"> <div class="sender-msg sb2"><div><span class="sendername">${user}</span></div><div><p class="sender-text">${msg}</p></div><div><span class="sender-time">20:11</span></div></div></div>`;
+                messagesOn.append(out3);
+            });
+            socket.on("user-rem",(user)=>{
+                console.log(user);
             })
-            socket.on("new-msg",(chatUser)=>{
-                var chats=document.getElementsByClassName("main")[0];
-                let out2="";
-                for(var i=0;i<chatUser.length;i++){
-                    if(chatUser[i].username===user){
-                        out2+=(`<div class="user-message"><div class="user-msg sb1"><div><span class="username">${user}</span></div><div><p class="user-text">${chatUser[i].message}</p></div><div><span class="user-time">20:08</span></div></div></div>`)
-                    }
-                    else{
-                        out2+=(`<div class="sender-message"> <div class="sender-msg sb2"><div><span class="sendername">${chatUser[i].username}</span></div><div><p class="sender-text">${chatUser[i].message}</p></div><div><span class="sender-time">20:11</span></div></div></div>`)
-                    }
-
-                }
-                chats.innerHTML=out2;
-                chats.scrollTo(0, chats.scrollHeight);
-
-
-            });
-            
-          
+             
           
         </script>
     </body>

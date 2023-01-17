@@ -1,55 +1,70 @@
-const express=require("express");
+const express = require('express');
+
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
+const { v4: uuidV4 } = require('uuid')
 const bodyParser=require("body-parser");
-const app=express();
-const http = require('http');
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const { writeFile } = require("fs");
-var fs = require('fs');
-const path = require("path");
-const io = new Server(server);
-app.get("/",function(req,res){
-    res.render("login");
-});
+
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+
+
+
+app.get('/', (req, res) => {
+  //res.redirect(`/${uuidV4()}`)
+  res.render("login");
+})
 app.post("/",function(req,res){
   console.log(req.body);
-  res.render("chat",{usern:req.body.username});
-});
-var onlineusr=[]
-var onlinechat=[]
-io.on("connection", (socket)=>{
-  
-  socket.on("new-user",(user)=>{
-   onlineusr.push(user); 
-  socket.username=user;
- 
-  io.emit("add-user",onlineusr);
- });
-  socket.on("send-prev-msg",()=>{
-    io.emit("rec-prev-msg",onlinechat);
+ const userId=req.body.username;
+ const roomId=req.body.room;
+ const roomType=req.body.roomType;
+ if(roomType==="Chat"){
+  res.render("chat",{roomId:roomId, userId:userId});
+ }
+ else{
+  res.render("video",{
+    roomId:roomId, userId:userId
   })
- socket.on("send-msg",(msgObj)=>{
-  onlinechat.push(msgObj);
-
-  io.emit("new-msg",onlinechat);
-  
+ }
 })
 
-socket.on("disconnect",()=>{
-  // console.log(socket);
-  var index = onlineusr.indexOf(socket.username);
-  if (index !== -1) {
-    onlineusr.splice(index, 1);
-  }
-  console.log(onlineusr);
-  io.emit("add-user",onlineusr);
-})
+// app.get('/:room', (req, res) => {
+//   res.render('video', { roomId: req.params.room })
+// })
 
-})
 
-server.listen(3000, () => {
-    console.log('listening on *:3000');
+io.on('connection', socket => {
+  socket.on("new-user",(user,room)=>{
+    socket.join(room);
+    io.in(room).emit("room-joined",user);
+    socket.on("message-send",(message)=>{
+      socket.in(room).emit("rec-msg",message,user);
+
+    });
+    socket.on("disconnect",()=>{
+      socket.in(room).emit("user-rem",user);
+    })
   });
+
+  
+
+  socket.on('join-room', (roomId, userId,username) => {
+    socket.join(roomId)
+    console.log(roomId,userId);
+    socket.to(roomId).emit('user-connected', userId,username)
+
+    socket.on('disconnect', () => {
+      socket.to(roomId).emit('user-disconnected', userId,username)
+    })
+  })
+})
+
+
+  
+ 
+
+
+server.listen(3000)
