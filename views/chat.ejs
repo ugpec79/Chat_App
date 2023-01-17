@@ -46,14 +46,17 @@
         </script>
         <script>
             socket=io();
-            users={}
+     
             socket.emit("new-user",user,room);
             socket.on("room-joined",(user)=>{
-                var out="";
-                out+=`<div class='chat1 using'><i class='uil uil-user'></i><span>${user}</span></div>`
+                var out='';
+                for(var i=0;i<user.length;i++){
+
+                    out+=`<div class='chat1 using'><i class='uil uil-user'></i><span>${user[i]}</span></div>`
+                }
                 var  userOnline=document.getElementsByClassName("chats")[0];
-                userOnline.append(out);
-                users[user]=out;
+                userOnline.innerHTML=out;
+            
             });
             var messagesOn=document.getElementsByClassName("main")[0];
             document.getElementById("chatting").addEventListener('submit', function(e) {
@@ -72,7 +75,14 @@
                 messagesOn.append(out3);
             });
             socket.on("user-rem",(user)=>{
-                console.log(user);
+                var out3='';
+                for(var i=0;i<user.length;i++){
+
+                    out3+=`<div class='chat1 using'><i class='uil uil-user'></i><span>${user[i]}</span></div>`
+                }
+                var  userOnline=document.getElementsByClassName("chats")[0];
+                userOnline.innerHTML=out3;
+              
             })
              
           

@@ -39,13 +39,29 @@ app.post("/",function(req,res){
 io.on('connection', socket => {
   socket.on("new-user",(user,room)=>{
     socket.join(room);
-    io.in(room).emit("room-joined",user);
+    socket.username=user;
+   
+    var OnlineUsers=[];
+    io.in(room).fetchSockets().then((users)=>{
+      users.forEach(element => {
+        OnlineUsers.push(element.username);
+      });
+      io.in(room).emit("room-joined",OnlineUsers);
+    });
+
     socket.on("message-send",(message)=>{
       socket.in(room).emit("rec-msg",message,user);
 
     });
     socket.on("disconnect",()=>{
-      socket.in(room).emit("user-rem",user);
+      var NewOnline=[]
+      io.in(room).fetchSockets().then((users)=>{
+        users.forEach(element => {
+          NewOnline.push(element.username);
+        });
+        socket.in(room).emit("user-rem",NewOnline);
+      });
+
     })
   });
 
