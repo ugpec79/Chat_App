@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+    <link rel="stylesheet" href="/css/update.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+    <div class="form">
+        <div class="left">
+            <form action="/updateProfile" method="post" enctype="multipart/form-data">
+            <div class="profile">
+                <img src="<%=userImg%>" alt="" id="profile_pic">
+                <input type="file" id="file" name="image" accept="image/*" >
+                <label for="file" id="choose_photo">Choose photo</label>
+            </div>
+            <span class="change">Change photo</span>
+            <div class="info">
+                <span class="username"><%=userId%></span>
+                <span class="actual"><%=actualName%></span>
+            </div>
+            <button type="submit" class="btn">Update</button>
+            <br>
+            <button  class="btn dash" value="Return to Dashboard" onclick="window.location.href='/'">Return to DashBoard</button>
+        </div>
+        <div class="right">
+            <div class="update_form">
+                <span>Update Profile</span>
+                    <h3>Change username</h3>
+                    <label for="username">Enter username :</label>
+                    <br>
+                    <input type="text" name="uName" value="<%=userId%>" id="username" placeholder="Enter your username" size="30">
+                    <br>
+                    <h3>Change Password</h3>
+                    <label for="old-pass">Enter Old Password : </label>
+                    <br>
+                    <input type="password" placeholder="Old Password" size="30" id="old-pass" name="oldPassword">
+                    <i class="uil uil-eye-slash" id="old"></i>
+                    <br>
+                    <label for="new-pass">Enter New Password : </label>
+                    <br>
+                    <input type="password" placeholder="New Password" size="30" id="new-pass" name="newPassword">
+                    <i class="uil uil-eye-slash" id="new"></i>
+                    <input type="button" value="Confirm" class="btn" id="submit">
+                    <h3>Other Details</h3>
+                    <label for="actual-name">Actual Name :</label>
+                    <br>
+                    <input type="text" size="30" id="actual-name" value="<%=actualName%>"  name="Actual Name" readonly>
+                    <br>
+                    <label for="email">Email : </label>
+                    <br>
+                    <input type="text" value="<%=emailId%>" size="30" id="email" name="eMail" readonly>
+                    <br>
+                  
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/update.js"></script>
+</body>
+</html>
