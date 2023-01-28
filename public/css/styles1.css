@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+.chats::-webkit-scrollbar{
+    width:10px;
+}
+.chats::-webkit-scrollbar-track{
+    background-color: transparent;
+    border-radius: 16px;
+}
+.chats::-webkit-scrollbar-thumb{
+    background-color: #0081B4;
+    border-radius: 16px;
+}
+.main::-webkit-scrollbar{
+    width:10px;
+}
+.main::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+.main::-webkit-scrollbar-thumb{
+    background-color: #0081B4;
+    border-radius: 16px;
+}
+html {
+    height: 100%;
+    width:100%;
+}
+body{
+    height: 100%;
+    width : 100%;
+    background-color: #0081B4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container{
+    width:90%;
+    height:90%;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+}
+.inner-cont{
+    position: relative;
+    width:100%;
+    height: 100%;
+    background-color: #F7F5EB;
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    border-radius: 16px;
+    display: flex;
+}
+.sidebar{
+    height:100%;
+    border-start-start-radius:16px;
+    border-bottom-left-radius:16px;
+    border-right:1px solid grey;
+    width:30%;
+    background-color: white;
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidecont{
+    height:95%;
+    width:95%;
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+}
+.chat-head{
+    font-size:30px;
+    font-weight: bolder;
+    font-family: 'Poppins', sans-serif;
+}
+.Search{
+    letter-spacing: 1px;
+    border-radius:10px;
+    border: 2px solid grey;
+    width:80%;
+    margin-top: 10px;
+    font-size: 18px;
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075)
+    ;
+}
+.chats{
+    overflow-y: scroll;
+}
+.using{
+    font-size: 18px;
+    font-weight: bolder;
+    font-family: 'Poppins', sans-serif;
+    padding:15px;
+    margin-top: 10px;
+}
+.using:hover{
+    background-color: #EEEEEE;
+    border-left: 5px solid #0081B4;
+    border-radius: 6px;
+    transition-duration:2sec;
+}
+.main-chat{
+    width:70%;
+}
+.header{
+    background-color: #A6D1E6;
+    width:100%;
+    height:18%;
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    font-size:30px;
+    font-weight: bolder;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    border-top-right-radius: 16px;
+
+}
+.uil-video{
+    padding-right:20px;
+    margin-left:auto;
+
+}
+.main{
+    width: 100%;
+    height: 72%;
+    background-image: url(chatbackground.jpg);
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+.footer{
+    width: 100%;
+    height: 10%;
+    background-color: white;
+    border-bottom-right-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.type-here{
+    width: 80%;
+}
+.type{
+    letter-spacing: 1px;
+    border: none;
+    border-bottom: 2px solid #0081B4;
+    width:90%;
+    font-size: 18px;
+    outline:none;
+}
+.user-message{
+    display:flex;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    justify-content: flex-end;
+    align-items: center;
+}
+.user-msg{
+    max-width: 300px;
+    background-color: #5BC0F8;
+    position: relative;
+    right:20px;
+    display:flex;
+    flex-direction: column;
+    padding:8px;
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    border-radius: 6px;
+    border-top-right-radius: 0px;
+}
+.user-msg .username{
+    color:red;
+    font-family: 'Poppins', sans-serif;
+}
+.user-text{
+    color:#EEEEEE;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+.user-time{
+    font-size: 10px;
+    color:grey;
+}
+.sb1:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid #5BC0F8;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #5BC0F8;
+    border-bottom: 10px solid transparent;
+    border-end-start-radius: 6px;
+    right: -15px;
+    top: 0px;
+  }
+  .sender-message{
+    display:flex;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    justify-content: flex-start;
+    align-items: center;
+}
+.sender-msg{
+    max-width: 300px;
+    background-color: #5BC0F8;
+    position: relative;
+    left:20px;
+    display:flex;
+    flex-direction: column;
+    padding:8px;
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    border-radius: 6px;
+    border-top-left-radius: 0px;
+}
+.sendername{
+    color:red;
+    font-family: 'Poppins', sans-serif;
+}
+.sender-text{
+    color:#EEEEEE;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+}
+.sender-time{
+    font-size: 10px;
+    color:grey;
+}
+.sb2:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-right: 10px solid #5BC0F8;
+    border-left: 10px solid transparent;
+    border-top: 10px solid #5BC0F8;
+    border-bottom: 10px solid transparent;
+    border-end-start-radius: 6px;
+    left: -15px;
+    top: 0px;
+  }
+

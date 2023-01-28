@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: #5B8FB9;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.main{
+  width:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+}
+.container{
+  position: relative;
+  max-width: 400px;
+  width:100%;
+  background-color: white;
+  padding: 30px;
+  box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+  border-radius: 10px;
+}
+.input-field{
+  margin: 20px 0px;
+  display:flex;
+  border-bottom: 2px solid grey;
+}
+
+.Login-tit{
+  font-weight:darker;
+  font-size: 25px;
+}
+.email{
+  width:90%;
+  height:100%;
+  padding:5px;
+  font-size:14px;
+  letter-spacing: 1px;
+  border:none;
+  outline:none;
+  transform:translateY(3px);
+}
+#password{
+  width:90%;
+  height:100%;
+  padding:5px;
+  font-size:14px;
+  letter-spacing: 1px;
+  border:none;
+  outline:none;
+  transform:translateY(3px);
+}
+.registered{
+    text-align: center;
+    font-size: 14px;
+}
+.button-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin : 10px 0;
+}
+.Signup-btn{
+    background-color: #0081B4;
+    color: white;
+    padding: 10px 150px;
+    border:none;
+    font-family: 'Poppins',sans-serif;
+    border-radius: 6px;
+    font-size: 18px;
+}
